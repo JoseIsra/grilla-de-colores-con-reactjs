@@ -11,29 +11,36 @@ function Grid({color}) {
     const[cells, setCells] = useState(Array.from({length:40}, ()=>(DEFAULT__CELL)));
 
 
-    const updateCells = (index,  defaultColorCell) =>(e) => {
+    const updateCells = (index) =>(e) => {
         e.preventDefault();
-        setCells(cells.map((cell,cellIndex) => {
-            if(cellIndex === index){
-                if(defaultColorCell) return defaultColorCell;
-                return {
-                    color:color,
-                    on:true
+        //si se presiona click izq o derecho
+        if(e.buttons === 1 || e.buttons === 2){
+            setCells(cells.map((cell,cellIndex) => {
+                if(cellIndex === index){
+                    if(e.buttons === 1 ){
+                        return {
+                            color:color,
+                            on:true
+                        };
+                    }
+                    return DEFAULT__CELL;
                 }
-            }
+                return cell;
+            }));
 
-            return cell;
-        }));
+        }
     }
 
+
     return (
-        <div className="grid">
+        <div id="supergrid" className="grid">
             {
                 cells.map((cell , index) => {
                     return <div 
                     key={index}
-                    onClick={updateCells(index)}
-                    onContextMenu={updateCells(index, DEFAULT__CELL)}
+                    onMouseDown={updateCells(index)}
+                    onMouseOver={updateCells(index)}
+                    onContextMenu={(e)=> e.preventDefault()}
                     style={{backgroundColor: cell.on ? cell.color : '#ffffff'  }}
                     className="cellsGrid"></div>
                 })
