@@ -1,0 +1,9 @@
+.grid
+{
+display:grid;
+grid-template-rows: 1fr 1fr 1fr 1fr;
+grid-template-columns: repeat(8 , 1fr);
+border: 1px solid black;
+width:640px;
+height:320px;
+}
